@@ -1,0 +1,5 @@
+.vscode/
+*.pyc
+.env
+backend\core\config\settings\local.py
+static

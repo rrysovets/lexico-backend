@@ -1,0 +1,22 @@
+{
+	"dockerComposeFile": [
+	  "../../docker_compose.yaml"
+      
+	],
+	"service": "django-backend",
+	"workspaceFolder": "/app",
+	"overrideCommand": false,
+	"customizations": {
+	  "vscode": {
+		"extensions": [
+		  "batisteo.vscode-django",
+		  "VisualStudioExptTeam.vscodeintellicode",
+		  "VisualStudioExptTeam.intellicode-api-usage-examples",
+		  "ms-python.vscode-pylance",
+		  "ms-python.python",
+		  "ms-python.debugpy"
+		]
+	  }
+	}
+  }
+  
