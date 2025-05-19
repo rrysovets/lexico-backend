@@ -18,8 +18,9 @@ import environ
 BASE_DIR = Path(__file__).resolve().parent.parent.parent.parent
 print(BASE_DIR)
 
+
 env = environ.Env()
-environ.Env.read_env(BASE_DIR/'..'/'.env')
+environ.Env.read_env(BASE_DIR/'.env')
 
 
 
@@ -34,11 +35,17 @@ DEBUG = False
 
 ALLOWED_HOSTS = ['localhost', 'django-backend']
 
-CSRF_TRUSTED_ORIGINS = ['http://localhost']
+CSRF_TRUSTED_ORIGINS = [
+    'http://localhost',
+    'http://localhost:5173'
+]
 
 CORS_ALLOWED_ORIGINS = [
     'http://localhost:8080',
     'http://192.168.100.14:8080',
+    'http://localhost:5173',
+    'http://localhost:80',
+    'http://localhost',
 ]
 
 
@@ -55,7 +62,12 @@ INSTALLED_APPS = [
     'core.apps.modules.apps.ModulesConfig',
     
     'rest_framework',
+    'rest_framework.authtoken',
+    'djoser',
+    
     'corsheaders',
+    'drf_spectacular',
+    'drf_spectacular_sidecar',
 ]
 
 MIDDLEWARE = [
@@ -74,7 +86,7 @@ ROOT_URLCONF = 'core.config.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [BASE_DIR/'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -116,7 +128,18 @@ CACHES = {
 }
 
 REST_FRAMEWORK = {
-    'DEFAULT_SCHEMA_CLASS': 'rest_framework.schemas.coreapi.AutoSchema',
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.TokenAuthentication',
+        # 'rest_framework.authentication.SessionAuthentication',
+
+    ],
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticatedOrReadOnly',
+        'rest_framework.permissions.IsAuthenticated',
+    ],
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    'PAGE_SIZE': 10
 }
 
 
@@ -162,3 +185,7 @@ STATIC_ROOT = BASE_DIR/'static'
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+CELERY_BROKER_URL = 'redis://redis:6379/0'
+CELERY_RESULT_BACKEND = "redis://redis:6379/0"
+

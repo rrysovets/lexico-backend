@@ -1,6 +1,6 @@
 {
 	"dockerComposeFile": [
-	  "../../docker_compose.yaml"
+	  "../docker_compose.yaml"
       
 	],
 	"service": "django-backend",

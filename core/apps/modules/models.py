@@ -1,5 +1,8 @@
+from django.contrib.auth import get_user_model
 from django.db import models
+from django.core.exceptions import ValidationError
 from .utils import int_to_bool_status_converter as int_to_bool
+
 
 
 class TimeBaseModel(models.Model):
@@ -22,6 +25,12 @@ class Module(TimeBaseModel):
         default=Status.DRAFT,
         verbose_name="Видимость",
     )
+    author = models.ForeignKey(get_user_model(), on_delete=models.CASCADE, related_name='modules')
+    likes = models.ManyToManyField(get_user_model(), related_name='liked_modules', blank=True)
+
+    @property
+    def rating(self):
+        return self.likes.count()
 
     def __str__(self):
         return self.title
