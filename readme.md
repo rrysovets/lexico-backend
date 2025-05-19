@@ -1,4 +1,4 @@
-Language Learning API
+LEXICO API
 Проект представляет собой RESTful API для приложения по изучению иностранных языков с функционалом словаря. 
 Построен на Django REST Framework с использованием PostgreSQL и Redis.
 
